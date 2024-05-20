@@ -1,0 +1,13 @@
+name = "html_components"
+
+version = "0.1.0"
+
+description = "Generate HTML components from simple functions"
+licences = ["MIT"]
+repository = { type = "github", user = "andre-dasilva", repo = "html_components" }
+
+[dependencies]
+gleam_stdlib = ">= 0.34.0 and < 2.0.0"
+
+[dev-dependencies]
+gleeunit = ">= 1.0.0 and < 2.0.0"
