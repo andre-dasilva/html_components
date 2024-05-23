@@ -2,7 +2,7 @@ import elements
 import gleam/list
 import gleam/string
 
-fn attributes_to_list(attributes: List(elements.HtmlAttribute)) -> String {
+fn attributes_to_list(attributes: List(elements.Attribute)) -> String {
   attributes
   |> list.map(fn(attr) { attr.key <> "=" <> "\"" <> attr.value <> "\"" })
   |> string.join(" ")
@@ -15,12 +15,21 @@ fn append_if(text, predicate, value_func) -> String {
   }
 }
 
-pub fn render_element(element: elements.HtmlElement) -> String {
-  case element {
-    elements.HtmlElement(tag, attributes, children) -> {
+pub fn escape(value: String) -> String {
+  value
+  |> string.replace(each: "&", with: "&amp;")
+  |> string.replace(each: "<", with: "&lt;")
+  |> string.replace(each: ">", with: "&gt;")
+  |> string.replace(each: "\"", with: "&quot;")
+  |> string.replace(each: "'", with: "&#x27;")
+  |> string.replace(each: "/", with: "&#x2F;")
+}
+
+pub fn element(el: elements.Element) -> String {
+  case el {
+    elements.Element(tag, attributes, children) -> {
       let html =
         "<"
-        |> append_if(fn() { tag == "html" }, fn() { "!DOCTYPE html><" })
         |> string.append(tag)
         |> append_if(fn() { list.length(attributes) > 0 }, fn() {
           " " <> attributes_to_list(attributes)
@@ -34,7 +43,7 @@ pub fn render_element(element: elements.HtmlElement) -> String {
         _ -> {
           let html_childen =
             children
-            |> list.map(render_element)
+            |> list.map(element)
             |> string.join("")
             |> string.append("</")
             |> string.append(tag)
@@ -47,7 +56,22 @@ pub fn render_element(element: elements.HtmlElement) -> String {
       }
     }
     elements.Text(value) -> {
-      value
+      escape(value)
+    }
+    elements.CData(value) -> {
+      "<![CDATA["
+      |> string.append(value)
+      |> string.append("]]>")
     }
   }
+}
+
+pub fn html(el: elements.Element) -> String {
+  "<!DOCTYPE html>"
+  |> string.append(element(el))
+}
+
+pub fn xml(el: elements.Element) -> String {
+  "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+  |> string.append(element(el))
 }

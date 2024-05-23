@@ -1,118 +1,33 @@
-pub type HtmlAttribute {
-  HtmlAttribute(key: String, value: String)
+pub type Attribute {
+  Attribute(key: String, value: String)
 }
 
-pub type HtmlElement {
-  HtmlElement(
-    tag: String,
-    attrs: List(HtmlAttribute),
-    children: List(HtmlElement),
-  )
+pub type Element {
+  Element(tag: String, attrs: List(Attribute), children: List(Element))
   Text(String)
-}
-
-pub fn attr(key: String, value: String) -> HtmlAttribute {
-  HtmlAttribute(key, value)
-}
-
-pub fn text(value: String) -> HtmlElement {
-  Text(value)
+  CData(String)
 }
 
 pub fn element(
   tag: String,
-  attrs: List(HtmlAttribute),
-  children: List(HtmlElement),
-) -> HtmlElement {
-  HtmlElement(tag: tag, attrs: attrs, children: children)
+  attrs: List(Attribute),
+  children: List(Element),
+) -> Element {
+  Element(tag: tag, attrs: attrs, children: children)
 }
 
-pub fn element_self_closing(tag: String, attrs: List(HtmlAttribute)) {
+pub fn element_self_closing(tag: String, attrs: List(Attribute)) {
   element(tag, attrs, [])
 }
 
-pub fn html(
-  attrs: List(HtmlAttribute),
-  children: List(HtmlElement),
-) -> HtmlElement {
-  element("html", attrs, children)
+pub fn attr(key: String, value: String) -> Attribute {
+  Attribute(key, value)
 }
 
-pub fn head(
-  attrs: List(HtmlAttribute),
-  children: List(HtmlElement),
-) -> HtmlElement {
-  element("head", attrs, children)
+pub fn text(value: String) -> Element {
+  Text(value)
 }
 
-pub fn title(title: String) -> HtmlElement {
-  element("title", [], [text(title)])
-}
-
-pub fn meta(attrs: List(HtmlAttribute)) -> HtmlElement {
-  element_self_closing("meta", attrs)
-}
-
-pub fn body(
-  attrs: List(HtmlAttribute),
-  children: List(HtmlElement),
-) -> HtmlElement {
-  element("body", attrs, children)
-}
-
-pub fn p(attrs: List(HtmlAttribute), children: List(HtmlElement)) -> HtmlElement {
-  element("p", attrs, children)
-}
-
-pub fn h1(
-  attrs: List(HtmlAttribute),
-  children: List(HtmlElement),
-) -> HtmlElement {
-  element("h1", attrs, children)
-}
-
-pub fn h2(
-  attrs: List(HtmlAttribute),
-  children: List(HtmlElement),
-) -> HtmlElement {
-  element("h2", attrs, children)
-}
-
-pub fn h3(
-  attrs: List(HtmlAttribute),
-  children: List(HtmlElement),
-) -> HtmlElement {
-  element("h3", attrs, children)
-}
-
-pub fn h4(
-  attrs: List(HtmlAttribute),
-  children: List(HtmlElement),
-) -> HtmlElement {
-  element("h4", attrs, children)
-}
-
-pub fn h5(
-  attrs: List(HtmlAttribute),
-  children: List(HtmlElement),
-) -> HtmlElement {
-  element("h5", attrs, children)
-}
-
-pub fn a(attrs: List(HtmlAttribute), children: List(HtmlElement)) -> HtmlElement {
-  element("a", attrs, children)
-}
-
-pub fn span(
-  attrs: List(HtmlAttribute),
-  children: List(HtmlElement),
-) -> HtmlElement {
-  element("span", attrs, children)
-}
-
-pub fn div(
-  attrs: List(HtmlAttribute),
-  children: List(HtmlElement),
-) -> HtmlElement {
-  element("div", attrs, children)
+pub fn cdata(value: String) -> Element {
+  CData(value)
 }
