@@ -21,9 +21,9 @@ gleam add html_components
 #### HTML
 
 ```gleam
-import elements
-import html
-import render
+import html_components/elements
+import html_components/html
+import html_components/render
 
 let input =
   html.html([elements.attr("lang", "en")], [
@@ -44,8 +44,8 @@ render.html(input)
 Since the functions are quite generic, its also possible to generate xml
 
 ```gleam
-import elements
-import render
+import html_components/elements
+import html_components/render
 
 let book_element = fn(id: String, author: String, title: String) {
   elements.element("book", [elements.attr("id", id)], [
