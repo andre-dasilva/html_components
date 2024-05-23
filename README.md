@@ -2,6 +2,7 @@
 
 [![Package Version](https://img.shields.io/hexpm/v/html_components)](https://hex.pm/packages/html_components)
 [![Hex Docs](https://img.shields.io/badge/hex-docs-ffaff3)](https://hexdocs.pm/html_components/)
+![Tests](https://github.com/andre-dasilva/html_components/actions/workflows/test.yml/badge.svg)
 
 Generate HTML (or XML) from simple gleam functions
 
