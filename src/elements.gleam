@@ -4,6 +4,7 @@ pub type Attribute {
 
 pub type Element {
   Element(tag: String, attrs: List(Attribute), children: List(Element))
+  EscapeText(String)
   Text(String)
   CData(String)
 }
@@ -26,6 +27,10 @@ pub fn attr(key: String, value: String) -> Attribute {
 
 pub fn text(value: String) -> Element {
   Text(value)
+}
+
+pub fn escape_text(value: String) -> Element {
+  EscapeText(value)
 }
 
 pub fn cdata(value: String) -> Element {

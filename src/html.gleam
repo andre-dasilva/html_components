@@ -17,7 +17,7 @@ pub fn document(
 }
 
 pub fn title(title: String) -> Element {
-  elements.element("title", [], [elements.text(title)])
+  elements.element("title", [], [elements.escape_text(title)])
 }
 
 pub fn meta(attrs: List(Attribute)) -> Element {

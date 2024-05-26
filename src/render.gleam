@@ -55,8 +55,11 @@ pub fn element(el: elements.Element) -> String {
         }
       }
     }
-    elements.Text(value) -> {
+    elements.EscapeText(value) -> {
       escape(value)
+    }
+    elements.Text(value) -> {
+      value
     }
     elements.CData(value) -> {
       "<![CDATA["
